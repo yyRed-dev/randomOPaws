@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>teste</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        a {
+            color: lightblue;
+        }
+    </style>
+</head>
+<body>
+</body>
+</html>
+
+<script>
+// so de Combatente por enquanto
+
+    var agi, int, vig, pre, frc;
+
+    var origem = [
+        "Acadêmico", "Agente de Saúde", "Amnésico", "Artista", "Atleta", "Chef", "Criminoso", "Cultista Arrependido", "Desgarrado", 
+        "Engenheiro", "Executivo", "Investigador", "Lutador", "Magnata", "Mercenário", "Militar", "Operário", "Policial", "Religioso", 
+        "Servidor Público", "Teórico da Conspiração", "T.I.", "Trabalhador Rural", "Trambiqueiro", "Universitário", "Vítima", "Amigo dos Animais", 
+        "Astronauta", "Chef do Outro Lado", "Colegial", "Cosplayer", "Diplomata", "Explorador", "Experimento", "Fanático por Criaturas", "Fotógrafo", 
+        "Inventor Paranormal", "Jovem Místico", "Legista do Turno da Noite", "Mateiro", "Mergulhador", "Motorista", "Nerd Entusiasta", "Psicólogo", 
+        "Profetizado", "Repórter Investigativo", "Agente de Limpeza", "Agiota", "Apostador", "Assassino Arrependido", "Bombeiro", 
+        "Cientista", "Coach", "Escritor Paranormal", "Ex-Membro da Produção", "Expurgado da Colmeia", "Fotógrafo", 
+        "Jovem Punk", "Nascido da Dor", "Personal Trainer", "Refugiado do Parasita", "Tocado pelas Sombras"
+    ];
+
+    var trilhasC = [
+        "Agente Secreto", "Amaldiçoado", "Aniquilador", "Bastião", "Caçador", "Comandante de Campo",
+        "Defletor", "Duelista", "Guerreiro", "Hemorrágico", "Insano", "Investigador Tático",
+        "Monstruoso", "Operações Especiais", "Pugilista", "Rei da Selva", "Restringido", "Tropa de Choque"
+    ];
+
+    var pesoIdade = [
+        "Cabeça Quente", "Catarata", "Covarde", "Definhamento", "Devagar, Jovem!", "Distraído", "Frágil", "Gota", 
+        "Impulsivo", "Indefeso", "Insolente", "Juntas Duras", "Louco", "Melancólico", "No Meu Tempo", "Paranóico", 
+        "Pulmão Ruim", "Rabugento", "Recurvado", "Sono Ruim", "Surdo", "Teimoso", "Tosse"
+    ];
+
+    var poderesC = [
+        "Acuidade com Arma", "Apego Angustiado", "Armamento Pesado", "Artista Marcial", "Ataque de Oportunidade",
+        "Ataque Volátil", "Caminho para Força", "Ciência das Cicatrizes", "Combater com Duas Armas", "Combate Defensivo",
+        "Continuar Atacando", "Correria Desesperada", "Engolir o Choro", "Golpe Demolidor", "Golpe Pesado", "Incansável",
+        "Instinto de Fuga", "Luta Improvisada",  "Paranoia Defensiva", "Presteza Atlética", "Proteção Pesada", "Punir o Algoz",
+        "Reflexos Defensivos", "Sacrificar os Joelhos", "Segurar o Gatilho", "Sem Tempo, Irmão", "Sentido Tático", "Tanque de Guerra", 
+        "Tiro Certeiro", "Tiro de Cobertura", "Transcender", "Treinamento em Perícia", "Um por Um", "Valentão"
+    ];
+
+    var poderesPara = [
+        "Absorver Conhecimento", "Absorver Esforços", "Adaptativo", "Alinhar Realidades", "Alma Desalinhada", 
+        "Anatomia Insana", "Antecipar", "Antecipar Vitalidade", "Afortunado", "Apatia Herege", "Aprender Ritual", 
+        "Armadura Viva", "Arma de Sangue", "Aura de Pavor", "Campo Protetor", "Causalidade Fortuita", "Comportamento Incomum", 
+        "Conhecimento Absoluto", "Conexão Empática", "Consumo de Energia", "Controlando o Caos", "Corpo Congelado", "Corpo Fechado", 
+        "Devanear", "Dementador", "Devorar", "Elitismo", "Encarar a Morte", "Escapar da Morte", "Espreitar da Besta", "Expansão de Conhecimento", 
+        "Empatia", "Golpe de Sorte", "Golpe Final", "Guerra da Informação", "Inércia", "Instintos Sanguinários", "Jackpot", 
+        "Ladrão de Tempo", "Manipular Entropia", "Murros Ferozes", "Ocultar nas Sombras", "Percepção Paranormal", "Potencial Aprimorado", 
+        "Potencial Reaproveitado", "Precognição", "Proeza Muscular", "Queimar a Largada", "Reação Acelerada", "Resistir a Elemento", 
+        "Sanidade por um Fio", "Sensitivo", "Sinuçada", "Sangue de Ferro", "Sangue Fervente", "Sangue Vivo", "Sortudo", "Surto Temporal", 
+        "Tempo Extra", "Termomutação", "Valer-se do Caos", "Vínculo Esotérico", "Visão do Oculto"
+    ];
+
+    var elementos = [
+        "Conhecimento", "Energia", "Morte", "Sangue", "Nenhuma"
+    ];
+
+    function randomizar(max) { // vai de 0 ate o numero colocado
+        return Math.floor(Math.random() * max);
+    }
+
+    function gerarAtributos() {
+        var soma, zeros;
+        
+        do {
+            agi = randomizar(4);
+            int = randomizar(4);
+            vig = randomizar(4);
+            pre = randomizar(4);
+            frc = randomizar(4);
+
+            soma = agi+int+vig+pre+frc;
+            zeros = 0;
+
+            if (agi == 0) {
+                zeros++;
+            }
+            if (int == 0) {
+                zeros++
+            }
+            if (vig == 0) {
+                zeros++;
+            }
+            if (pre == 0) {
+                zeros++;
+            }
+            if (frc == 0) {
+                zeros++;
+            } // se colocar td dentro de 1 so if não funciona
+
+        } while (soma != 9 || zeros > 1);
+
+        var final = [agi, int, vig, pre, frc];
+
+        return final;
+
+    }
+
+    function gerarOrigem() {
+        return origem[ randomizar(origem.length) ];
+    }
+
+    function escolherTrilha() {
+        return trilhasC[ randomizar(trilhasC.length) ]
+    }
+
+    function obterRegraIdade() {
+        if (randomizar(2) === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function obterPesoIdade() {
+        return pesoIdade[ randomizar(pesoIdade.length) ]
+    }
+
+    function escolherPoderC() {
+        return poderesC[ randomizar(poderesC.length) ];
+    }
+
+    function escolherPoderesC() {
+        
+        var velho = obterRegraIdade();
+        var x = 6;
+        if (velho) {
+            x = 7;
+        }
+
+        var novosPoderes = [];
+
+        for (var i=0; i<x; i++) {
+            var poder;
+
+            do {
+                poder = escolherPoderC();
+
+                if (poder === "Transcender") {
+                    poder = "Transcender: " + gerarPoderPara();
+
+                    if (poder === "Transcender: Resistir a Elemento") {
+                        poder = "Transcender: Resistir a " + elementos[randomizar(4)];
+                    }
+                }
+            
+            } while ( novosPoderes.includes(poder) );
+            novosPoderes.push(poder);
+        }
+            
+        if ( velho ) {
+            var poderes = "Poder 05% = " + novosPoderes[0] + " | " + obterPesoIdade()
+                    + "<br>Poder 15% = " + novosPoderes[1]
+                    + "<br>Poder 30% = " + novosPoderes[2] 
+                    + "<br>Poder 45% = " + novosPoderes[3]
+                    + "<br>Poder 60% = " + novosPoderes[4]
+                    + "<br>Poder 75% = " + novosPoderes[5]
+                    + "<br>Poder 90% = " + novosPoderes[6];
+        } else {
+            var poderes = "Poder 15% = " + novosPoderes[0]
+                    + "<br>Poder 30% = " + novosPoderes[1] 
+                    + "<br>Poder 45% = " + novosPoderes[2]
+                    + "<br>Poder 60% = " + novosPoderes[3]
+                    + "<br>Poder 75% = " + novosPoderes[4]
+                    + "<br>Poder 90% = " + novosPoderes[5];
+        }
+
+            return poderes;
+    }
+
+    function gerarPoderPara() {
+        return poderesPara[ randomizar(poderesPara.length) ]
+    }
+
+    function gerarAtributos99( atributos ) {
+
+        var atributos99 = [];
+        for (var aux=0; aux<atributos.length; aux++) {
+            atributos99[aux] = atributos[aux];
+        }
+
+        for (var aux=1; aux<=4; aux++) {
+            var atrib = ( randomizar(5) );
+            atributos99[atrib] += 1;
+        }
+        var final = "Agi = " +atributos99[0]
+                + "<br>Int = " +atributos99[1]
+                + "<br>Vig = " +atributos99[2]
+                + "<br>Pre = " +atributos99[3]
+                + "<br>Frc = " +atributos99[4];
+
+        return final;
+    }
+
+    function escolherAfinidade() {
+        return elementos[ randomizar(elementos.length) ];
+    }
+
+    function gerarPersonagem() {
+        var atributosIniciais = gerarAtributos();
+        document.write("<h2>PERSONAGEM</h2>");
+        document.write("<b>Atributos:</b><br>" + gerarAtributos99( atributosIniciais ) +"<br>");
+        document.write("<br><b>Origem:</b> " + gerarOrigem() + "<br>");
+        document.write("<br><b>Trilha:</b> " + escolherTrilha() + "<br>");
+        document.write("<br><b>Lista de Poderes:</b><br>" + escolherPoderesC() + "<br>");
+        document.write("<br><b>Afinidade Elemental: </b>" + escolherAfinidade() );
+    }
+
+    gerarPersonagem();
+
+</script>
+
